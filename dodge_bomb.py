@@ -91,7 +91,6 @@ def main():
                 return
         screen.blit(bg_img, [0, 0])
 
-
         if kk_rct.colliderect(bb_rct):
             blackout = pg.Surface((WIDTH, HEIGHT))
             blackout.set_alpha(150) #半透明にする
