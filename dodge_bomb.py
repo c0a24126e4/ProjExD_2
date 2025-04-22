@@ -36,6 +36,11 @@ def main():
     #こうかとん初期化
     bg_img = pg.image.load("fig/pg_bg.jpg")    
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
+    kk_img_left = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
+    kk_img_up = pg.transform.rotozoom(pg.image.load("fig/6.png"), 0, 0.9)
+    kk_img_right = pg.transform.rotozoom(pg.image.load("fig/2.png"), 0, 0.9)
+    # kk_img_down = pg.transform.rotozoom(pg.image.load("fig/4.png"), 0, 0.9)
+    kk_img_down = pg.transform.flip(kk_img_up, False, True)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
     #爆弾初期化
@@ -66,16 +71,15 @@ def main():
                 sum_mv[0] += mv[0] #左右方向
                 sum_mv[1] += mv[1] #上下方法
         
-        """
+        
         if key_lst[pg.K_UP]:
-            sum_mv[1] -= 5
+            kk_img = kk_img_up
         if key_lst[pg.K_DOWN]:
-            sum_mv[1] += 5
+            kk_img = kk_img_down
         if key_lst[pg.K_LEFT]:
-            sum_mv[0] -= 5
+            kk_img = kk_img_left
         if key_lst[pg.K_RIGHT]:
-            sum_mv[0] += 5
-        """
+            kk_img = kk_img_right
 
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True): #画面の外だったら
