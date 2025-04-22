@@ -46,10 +46,23 @@ def main():
     #爆弾初期化
     bb_img = pg.Surface((20, 20))
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
+  # 爆弾の拡大画像リストを作成
+    bb_imgs = []
+    for r in range(1, 11):
+        bb_img = pg.Surface((20*r, 20*r))
+        pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+        bb_img.set_colorkey((0, 0, 0))
+        bb_imgs.append(bb_img)
+
+    # 加速度リストを作成
+    bb_accs = [a for a in range(1, 11)]
+
+    # 爆弾の初期画像を設定
+    bb_img = bb_imgs[0]
     bb_rct = bb_img.get_rect()
     bb_rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
-    bb_img.set_colorkey((0, 0, 0))
     vx, vy = +5, +5
+
 
     clock = pg.time.Clock()
     tmr = 0
@@ -72,7 +85,7 @@ def main():
                 sum_mv[1] += mv[1] #上下方法
         
         
-        if key_lst[pg.K_UP]:
+        if key_lst[pg.K_UP]: #こうかとんの向きを進行方向へ変える
             kk_img = kk_img_up
         if key_lst[pg.K_DOWN]:
             kk_img = kk_img_down
@@ -85,6 +98,14 @@ def main():
         if check_bound(kk_rct) != (True, True): #画面の外だったら
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1]) #画面内に戻す
 
+        #爆弾の画像と速度を時間経過とともに更新
+        bb_img = bb_imgs[min(tmr//500, 9)]
+        avx = vx*bb_accs[min(tmr//500, 9)]
+        avy = vy*bb_accs[min(tmr//500, 9)]
+
+
+        bb_rct.move_ip(avx, avy) # 加速された速度で移動
+
 
         screen.blit(kk_img, kk_rct)
         bb_rct.move_ip(vx, vy)
@@ -94,7 +115,7 @@ def main():
         if not tate: #上下どちらかにはみ出ていたら
             vy *= -1
 
-        screen.blit(bb_img, bb_rct) #爆弾の描画
+        screen.blit(bb_img, bb_rct) # 更新された爆弾を描画
         pg.display.update()
         tmr += 1
         clock.tick(50)
@@ -105,3 +126,13 @@ if __name__ == "__main__":
     main()
     pg.quit()
     sys.exit()
+
+
+
+
+
+
+
+
+
+
