@@ -14,7 +14,7 @@ DELTA = {
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-def check_bound(rct: pg.Rect):  # -> tuple[bool, bool]:
+def check_bound(rct: pg.Rect):#-> tuple[bool, bool]:
     """
     引数：こうかとんRectまたは爆弾Rect
     戻り値：判定結果タプル（横、縦）
@@ -46,7 +46,7 @@ def main():
     #爆弾初期化
     bb_img = pg.Surface((20, 20))
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
-  # 爆弾の拡大画像リストを作成
+    # 爆弾の拡大画像リストを作成
     bb_imgs = []
     for r in range(1, 11):
         bb_img = pg.Surface((20*r, 20*r))
@@ -71,16 +71,16 @@ def main():
     kk_base_img = pg.image.load("fig/3.png")  # 基本は左向き画像
     kk_gyaku_img = pg.transform.flip(kk_base_img,True,False)
     kk_imgs = {
-    (0, 0): pg.transform.rotozoom(kk_base_img, 0, 0.9),       # 静止
-    (0, -5): pg.transform.rotozoom(kk_base_img, -90, 0.9),    # 上
-    (0, +5): pg.transform.rotozoom(kk_base_img, 90, 0.9),     # 下
-    (-5, 0): pg.transform.rotozoom(kk_base_img, 0, 0.9),      # 左（デフォルト）
-    (+5, 0): pg.transform.rotozoom(kk_gyaku_img, 0, 0.9),    # 右
+    (0, 0): pg.transform.rotozoom(kk_base_img, 0, 0.9),  # 静止
+    (0, -5): pg.transform.rotozoom(kk_base_img, -90, 0.9),  # 上
+    (0, +5): pg.transform.rotozoom(kk_base_img, 90, 0.9),  # 下
+    (-5, 0): pg.transform.rotozoom(kk_base_img, 0, 0.9),  # 左（デフォルト）
+    (+5, 0): pg.transform.rotozoom(kk_gyaku_img, 0, 0.9),  # 右
 
-    (-5, -5): pg.transform.rotozoom(kk_base_img, -45, 0.9),   # 左上
-    (-5, +5): pg.transform.rotozoom(kk_base_img, 45, 0.9),    # 左下
+    (-5, -5): pg.transform.rotozoom(kk_base_img, -45, 0.9),  # 左上
+    (-5, +5): pg.transform.rotozoom(kk_base_img, 45, 0.9),  # 左下
     (+5, -5): pg.transform.rotozoom(kk_gyaku_img, 45, 0.9),  # 右上
-    (+5, +5): pg.transform.rotozoom(kk_gyaku_img, -45, 0.9),   # 右下
+    (+5, +5): pg.transform.rotozoom(kk_gyaku_img, -45, 0.9),  # 右下
 }
 
 
@@ -167,13 +167,3 @@ if __name__ == "__main__":
     main()
     pg.quit()
     sys.exit()
-
-
-
-
-
-
-
-
-
-
