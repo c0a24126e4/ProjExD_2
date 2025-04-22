@@ -66,6 +66,25 @@ def main():
 
     clock = pg.time.Clock()
     tmr = 0
+
+
+    kk_base_img = pg.image.load("fig/3.png")  # 基本は左向き画像
+    kk_gyaku_img = pg.transform.flip(kk_base_img,True,False)
+    kk_imgs = {
+    (0, 0): pg.transform.rotozoom(kk_base_img, 0, 0.9),       # 静止
+    (0, -5): pg.transform.rotozoom(kk_base_img, -90, 0.9),    # 上
+    (0, +5): pg.transform.rotozoom(kk_base_img, 90, 0.9),     # 下
+    (-5, 0): pg.transform.rotozoom(kk_base_img, 0, 0.9),      # 左（デフォルト）
+    (+5, 0): pg.transform.rotozoom(kk_gyaku_img, 0, 0.9),    # 右
+
+    (-5, -5): pg.transform.rotozoom(kk_base_img, -45, 0.9),   # 左上
+    (-5, +5): pg.transform.rotozoom(kk_base_img, 45, 0.9),    # 左下
+    (+5, -5): pg.transform.rotozoom(kk_gyaku_img, 45, 0.9),  # 右上
+    (+5, +5): pg.transform.rotozoom(kk_gyaku_img, -45, 0.9),   # 右下
+}
+
+
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -107,16 +126,14 @@ def main():
             if key_lst[key]:
                 sum_mv[0] += mv[0] #左右方向
                 sum_mv[1] += mv[1] #上下方法
+
+        sum_mv = [0, 0]
+        for key, mv in DELTA.items():
+            if key_lst[key]:
+                sum_mv[0] += mv[0]
+                sum_mv[1] += mv[1]
+        kk_img = kk_imgs.get(tuple(sum_mv), kk_imgs[(0, 0)])
         
-        
-        if key_lst[pg.K_UP]: #こうかとんの向きを進行方向へ変える
-            kk_img = kk_img_up
-        if key_lst[pg.K_DOWN]:
-            kk_img = kk_img_down
-        if key_lst[pg.K_LEFT]:
-            kk_img = kk_img_left
-        if key_lst[pg.K_RIGHT]:
-            kk_img = kk_img_right
 
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True): #画面の外だったら
