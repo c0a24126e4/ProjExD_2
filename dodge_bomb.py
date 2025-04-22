@@ -39,8 +39,8 @@ def main():
     kk_img_left = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_img_up = pg.transform.rotozoom(pg.image.load("fig/6.png"), 0, 0.9)
     kk_img_right = pg.transform.rotozoom(pg.image.load("fig/2.png"), 0, 0.9)
-    # kk_img_down = pg.transform.rotozoom(pg.image.load("fig/4.png"), 0, 0.9)
     kk_img_down = pg.transform.flip(kk_img_up, False, True)
+    kk_img_gameover = pg.transform.rotozoom(pg.image.load("fig/8.png"), 0, 0.9)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
     #爆弾初期化
@@ -71,6 +71,30 @@ def main():
             if event.type == pg.QUIT: 
                 return
         screen.blit(bg_img, [0, 0])
+
+
+        if kk_rct.colliderect(bb_rct):
+            blackout = pg.Surface((WIDTH, HEIGHT))
+            blackout.set_alpha(150) #半透明にする
+            blackout.fill((0, 0, 0)) #surfaceを一色に塗りつぶす
+            screen.blit(blackout, (0, 0))
+            screen.blit(kk_img_gameover, kk_rct)
+            # game over テキスト
+            fonto = pg.font.Font(None,80)
+            txt = fonto.render("Game Over",True, (255,255,255))
+            txt_rect = txt.get_rect(center=(WIDTH / 2, HEIGHT / 2))
+            screen.blit(txt,txt_rect)
+            # こうかとん（泣いてる）画像を左右に表示
+            icon_img = pg.transform.rotozoom(kk_img_gameover, 0, 1)
+            icon_w = icon_img.get_width()
+            icon_h = icon_img.get_height()
+
+            # テキストの左右にアイコンを配置
+            screen.blit(icon_img, (txt_rect.left - icon_w - 10, txt_rect.centery - icon_h // 2))  # 左側
+            screen.blit(icon_img, (txt_rect.right + 10, txt_rect.centery - icon_h // 2))         # 右側
+            pg.display.update()
+            pg.time.wait(5000)
+            return
 
 
         if kk_rct.colliderect(bb_rct): #こうかとんRectと爆弾Rectが重なっていたら 
