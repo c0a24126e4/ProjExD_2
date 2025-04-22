@@ -93,7 +93,7 @@ def main():
 
         if kk_rct.colliderect(bb_rct):
             blackout = pg.Surface((WIDTH, HEIGHT))
-            blackout.set_alpha(150) #半透明にする
+            blackout.set_alpha(150)  # 半透明にする
             blackout.fill((0, 0, 0)) #surfaceを一色に塗りつぶす
             screen.blit(blackout, (0, 0))
             screen.blit(kk_img_gameover, kk_rct)
