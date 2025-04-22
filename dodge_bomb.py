@@ -100,7 +100,7 @@ def main():
             screen.blit(kk_img_gameover, kk_rct)
             # game over テキスト
             fonto = pg.font.Font(None,80)
-            txt = fonto.render("Game Over",True, (255,255,255))
+            txt = fonto.render("Game Over", True, (255,255,255))
             txt_rect = txt.get_rect(center=(WIDTH / 2, HEIGHT / 2))
             screen.blit(txt,txt_rect)
             # こうかとん（泣いてる）画像を左右に表示
